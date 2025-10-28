@@ -11,7 +11,7 @@ import {
   Activity,
   FileText
 } from 'lucide-react';
-import '../css/navigation.css';
+import '../CSS/Navigation.css';
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
