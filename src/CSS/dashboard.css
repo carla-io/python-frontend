@@ -1,0 +1,641 @@
+/* Electronics Inventory Dashboard CSS */
+
+/* Base styles and resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Main container */
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce4ec 50%, #fecaca 100%);
+  padding: 1.5rem;
+}
+
+.dashboard-content {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+/* Header styles */
+.header {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #831843;
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  color: #be185d;
+  font-size: 1rem;
+}
+
+/* Refresh button */
+.refresh-button {
+  background-color: #db2777;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.refresh-button:hover:not(:disabled) {
+  background-color: #be185d;
+}
+
+.refresh-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.refresh-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.refresh-icon.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading state */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  height: 3rem;
+  width: 3rem;
+  color: #db2777;
+  animation: spin 1s linear infinite;
+}
+
+.loading-container p {
+  color: #831843;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+/* Error state */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-icon {
+  height: 4rem;
+  width: 4rem;
+  color: #ef4444;
+}
+
+.error-container h3 {
+  color: #831843;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.error-container p {
+  color: #be185d;
+  font-size: 1rem;
+  max-width: 500px;
+}
+
+.retry-button {
+  background-color: #db2777;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.retry-button:hover {
+  background-color: #be185d;
+}
+
+/* Error banner */
+.error-banner {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.error-dismiss {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #991b1b;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-dismiss:hover {
+  opacity: 0.7;
+}
+
+/* Statistics cards grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Stat card styles */
+.stat-card {
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #fbcfe8;
+}
+
+.stat-card-pink {
+  background-color: #fce7f3;
+}
+
+.stat-card-rose {
+  background-color: #ffe4e6;
+}
+
+.stat-card-red {
+  background-color: #fee2e2;
+}
+
+.stat-card-orange {
+  background-color: #fed7aa;
+}
+
+.stat-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-card-title {
+  color: #db2777;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.stat-card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.stat-card-value-pink {
+  color: #9d174d;
+}
+
+.stat-card-value-rose {
+  color: #9f1239;
+}
+
+.stat-card-value-red {
+  color: #991b1b;
+}
+
+.stat-card-value-orange {
+  color: #c2410c;
+}
+
+.stat-card-icon {
+  height: 2rem;
+  width: 2rem;
+  color: #ec4899;
+  flex-shrink: 0;
+}
+
+/* Search and actions section */
+.search-actions-section {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid #fbcfe8;
+}
+
+.search-actions-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .search-actions-content {
+    flex-direction: row;
+  }
+}
+
+/* Search input */
+.search-container {
+  position: relative;
+  flex: 1;
+  max-width: 28rem;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f9a8d4;
+  height: 1.25rem;
+  width: 1.25rem;
+  z-index: 1;
+}
+
+.search-input {
+  width: 100%;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border: 1px solid #fbb6ce;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 0 2px #f9a8d4;
+  border-color: transparent;
+}
+
+/* Add button */
+.add-button {
+  background-color: #db2777;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.add-button:hover {
+  background-color: #be185d;
+}
+
+.add-button-icon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+/* Electronics list table */
+.medicine-table-container {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid #fbcfe8;
+}
+
+.medicine-table-header {
+  background-color: #db2777;
+  color: white;
+  padding: 1rem;
+}
+
+.medicine-table-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.no-results {
+  color: #be185d;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.medicine-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header {
+  background-color: #fdf2f8;
+}
+
+.table-header th {
+  text-align: left;
+  padding: 1rem;
+  font-weight: 600;
+  color: #9d174d;
+}
+
+.table-row {
+  border-top: 1px solid #fbcfe8;
+  transition: background-color 0.2s;
+}
+
+.table-row:hover {
+  background-color: #fef7ff;
+}
+
+.table-cell {
+  padding: 1rem;
+  vertical-align: top;
+}
+
+.medicine-name {
+  font-weight: 500;
+  color: #111827;
+}
+
+/* Category badge */
+.category-badge {
+  background-color: #fce7f3;
+  color: #9d174d;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+/* Stock info */
+.stock-main {
+  color: #111827;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.stock-min {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Status indicator */
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-indicator {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-indicator-green {
+  background-color: #10b981;
+}
+
+.status-indicator-red {
+  background-color: #ef4444;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-badge-green {
+  color: #065f46;
+  background-color: #ecfdf5;
+}
+
+.status-badge-red {
+  color: #991b1b;
+  background-color: #fee2e2;
+}
+
+/* Specifications/Expiry date */
+.expiry-date {
+  color: #111827;
+}
+
+.expiry-date-warning {
+  color: #d97706;
+  font-weight: 500;
+}
+
+.expiry-warning {
+  font-size: 0.75rem;
+  color: #d97706;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.expiry-warning-icon {
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+.supplier-text {
+  color: #4b5563;
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.empty-state-icon {
+  height: 4rem;
+  width: 4rem;
+  color: #f9a8d4;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  color: #831843;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: #be185d;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .refresh-button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .search-actions-content {
+    align-items: stretch;
+  }
+  
+  .search-container {
+    max-width: none;
+  }
+  
+  .table-cell {
+    padding: 0.75rem;
+  }
+}
+
+/* Focus and accessibility */
+button:focus,
+input:focus {
+  outline: 2px solid #f9a8d4;
+  outline-offset: 2px;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.action-btn {
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-btn {
+  background-color: #fce7f3;
+  color: #db2777;
+}
+
+.edit-btn:hover {
+  background-color: #fbcfe8;
+  color: #be185d;
+}
+
+.delete-btn {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+.delete-btn:hover {
+  background-color: #fecaca;
+  color: #dc2626;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+/* Smooth transitions */
+* {
+  transition: colors 0.2s ease-in-out;
+}
+
