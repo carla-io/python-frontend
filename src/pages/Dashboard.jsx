@@ -263,7 +263,7 @@ const ElectronicsInventoryDashboard = () => {
           {/* header-dashboard */}
           <div className="header">
             <div>
-              <h1>Electronics Inventory Dashboard</h1>
+              <h1>CircuitHub</h1>
               <p>Track and manage microcontrollers, sensors, and electronic components</p>
             </div>
             <button 

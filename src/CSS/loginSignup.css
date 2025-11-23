@@ -499,7 +499,7 @@ html, body {
 
 /* Update the company name to reflect Medicine Inventory */
 .company-name::after {
-  content: "Electronics Inventory";
+  content: "Circuit Hub";
 }
 
 .company-name {

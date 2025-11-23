@@ -121,7 +121,7 @@ const LoginSignup = () => {
         localStorage.setItem('userType', 'user');
         localStorage.setItem('authToken', data.token);
         
-        toast.success('Registration successful! Welcome to Electronics Inventory.', {
+        toast.success('Registration successful! Welcome to Circuit Hub.', {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -218,7 +218,7 @@ const LoginSignup = () => {
       <div className="right-panel">
         {/* Header */}
         <div className="header">
-          <h1 className="company-name">Electronics Inventory System</h1>
+          <h1 className="company-name">Circuit Hub System</h1>
         </div>
         
         {/* Form Container */}

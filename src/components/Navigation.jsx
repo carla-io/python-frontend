@@ -33,21 +33,7 @@ const Navigation = () => {
       href: userType === 'admin' ? '/admin' : userType === 'technician' ? '/technician' : '/dashboard', 
       icon: Home 
     },
-    { 
-      name: 'Electronics Inventory', 
-      href: '/inventory', 
-      icon: Cpu 
-    },
-    { 
-      name: 'Reports', 
-      href: '/reports', 
-      icon: FileText 
-    },
-    { 
-      name: 'Analytics', 
-      href: '/analytics', 
-      icon: Activity 
-    },
+   
   ];
 
   // Add admin-only items
@@ -77,7 +63,7 @@ const Navigation = () => {
           {/* Logo and brand */}
           <div className="nav-brand">
             <Cpu className="brand-icon" />
-            <span className="brand-text">Electronics Inventory</span>
+            <span className="brand-text">CircuitHub</span>
           </div>
 
           {/* Desktop menu */}
