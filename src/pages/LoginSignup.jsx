@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import '../CSS/loginSignup.css';
-import API_BASE_URL from '../utils/api'
+import API_BASE_URL from '../utils/api';
 
 const LoginSignup = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [loginData, setLoginData] = useState({
     name: 'John Smith',
     password: '••••••••••'
@@ -30,47 +32,71 @@ const LoginSignup = () => {
         navigate('/technician');
         break;
       default:
-        // For regular users, redirect to main dashboard
         navigate('/dashboard');
         break;
     }
   };
 
   const handleLogin = async () => {
+    if (isLoading) return;
+    
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: 'POST',
+      setIsLoading(true);
+      
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, loginData, {
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(loginData)
+        timeout: 10000 // 10 second timeout
       });
 
-      const data = await response.json();
+      const { data } = response;
+      
+      // Store user data in localStorage
+      const userType = data.user?.userType || 'user';
+      localStorage.setItem('userName', data.user?.name || loginData.name);
+      localStorage.setItem('userType', userType);
+      localStorage.setItem('userData', 'true');
+      localStorage.setItem('authToken', data.token);
 
-      if (response.ok) {
-        // Store user data in localStorage
-        const userType = data.user?.userType || 'user';
-        localStorage.setItem('userName', data.user?.name || loginData.name);
-        localStorage.setItem('userType', userType);
-        localStorage.setItem('userData', 'true');
-        localStorage.setItem('authToken', data.token);
-
-        toast.success('Login successful! Welcome back.', {
+      toast.success('Login successful! Welcome back.', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
+      // Redirect after short delay to show success message
+      setTimeout(() => {
+        redirectToDashboard(userType);
+      }, 2000);
+      
+    } catch (err) {
+      console.error('Login error:', err);
+      
+      if (err.response) {
+        // Server responded with error status
+        toast.error(err.response.data.message || 'Login failed. Please try again.', {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 4000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
         });
-        
-        // Redirect after short delay to show success message
-        setTimeout(() => {
-          redirectToDashboard(userType);
-        }, 2000);
-        
-        console.log(data);
+      } else if (err.request) {
+        // Request made but no response received
+        toast.error('No response from server. Please check your connection.', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       } else {
-        toast.error(data.message || 'Login failed. Please try again.', {
+        // Something else happened
+        toast.error('Something went wrong during login. Please try again.', {
           position: "top-right",
           autoClose: 4000,
           hideProgressBar: false,
@@ -79,20 +105,14 @@ const LoginSignup = () => {
           draggable: true,
         });
       }
-    } catch (err) {
-      console.error('Login error:', err);
-      toast.error('Something went wrong during login. Please check your connection.', {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleRegister = async () => {
+    if (isLoading) return;
+    
     try {
       // Validate password confirmation
       if (registerData.password !== registerData.confirmPassword) {
@@ -103,41 +123,64 @@ const LoginSignup = () => {
         return;
       }
 
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
-        method: 'POST',
+      setIsLoading(true);
+
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+        name: registerData.name,
+        password: registerData.password,
+        userType: 'user'
+      }, {
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: registerData.name,
-          password: registerData.password,
-          userType: 'user'
-        })
+        timeout: 10000 // 10 second timeout
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Store user data in localStorage
-        localStorage.setItem('userName', registerData.name);
-        localStorage.setItem('userType', 'user');
-        localStorage.setItem('authToken', data.token);
-        
-        toast.success('Registration successful! Welcome to Circuit Hub.', {
+      const { data } = response;
+      
+      // Store user data in localStorage
+      localStorage.setItem('userName', registerData.name);
+      localStorage.setItem('userType', 'user');
+      localStorage.setItem('authToken', data.token);
+      
+      toast.success('Registration successful! Welcome to Circuit Hub.', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      
+      // Redirect after short delay to show success message
+      setTimeout(() => {
+        redirectToDashboard('user');
+      }, 2000);
+      
+    } catch (err) {
+      console.error('Registration error:', err);
+      
+      if (err.response) {
+        // Server responded with error status
+        toast.error(err.response.data.message || 'Registration failed. Please try again.', {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 4000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
         });
-        
-        // Redirect after short delay to show success message
-        setTimeout(() => {
-          redirectToDashboard('user');
-        }, 2000);
-        
-        console.log(data);
+      } else if (err.request) {
+        // Request made but no response received
+        toast.error('No response from server. Please check your connection.', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       } else {
-        toast.error(data.message || 'Registration failed. Please try again.', {
+        // Something else happened
+        toast.error('Something went wrong during registration. Please try again.', {
           position: "top-right",
           autoClose: 4000,
           hideProgressBar: false,
@@ -146,16 +189,8 @@ const LoginSignup = () => {
           draggable: true,
         });
       }
-    } catch (err) {
-      console.error('Registration error:', err);
-      toast.error('Something went wrong during registration. Please check your connection.', {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -177,7 +212,6 @@ const LoginSignup = () => {
 
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
-    // Reset password visibility when switching forms
     setShowPassword(false);
     setShowConfirmPassword(false);
   };
@@ -240,6 +274,7 @@ const LoginSignup = () => {
                     className="form-input"
                     value={loginData.name}
                     onChange={handleLoginChange}
+                    disabled={isLoading}
                   />
                 </div>
                 
@@ -253,20 +288,27 @@ const LoginSignup = () => {
                       className="form-input password-input"
                       value={loginData.password}
                       onChange={handleLoginChange}
+                      disabled={isLoading}
                     />
                     <button
                       type="button"
                       className="password-toggle"
                       onClick={togglePasswordVisibility}
                       aria-label={showPassword ? "Hide password" : "Show password"}
+                      disabled={isLoading}
                     >
                       {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                     </button>
                   </div>
                 </div>
                 
-                <button type="button" className="auth-button" onClick={handleLogin}>
-                  Sign in
+                <button 
+                  type="button" 
+                  className="auth-button" 
+                  onClick={handleLogin}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Signing in...' : 'Sign in'}
                 </button>
                 
                 <div className="auth-toggle">
@@ -287,6 +329,7 @@ const LoginSignup = () => {
                     value={registerData.name}
                     onChange={handleRegisterChange}
                     placeholder="John Smith"
+                    disabled={isLoading}
                   />
                 </div>
                 
@@ -301,12 +344,14 @@ const LoginSignup = () => {
                       value={registerData.password}
                       onChange={handleRegisterChange}
                       placeholder="••••••••••"
+                      disabled={isLoading}
                     />
                     <button
                       type="button"
                       className="password-toggle"
                       onClick={togglePasswordVisibility}
                       aria-label={showPassword ? "Hide password" : "Show password"}
+                      disabled={isLoading}
                     >
                       {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                     </button>
@@ -324,20 +369,27 @@ const LoginSignup = () => {
                       value={registerData.confirmPassword}
                       onChange={handleRegisterChange}
                       placeholder="••••••••••"
+                      disabled={isLoading}
                     />
                     <button
                       type="button"
                       className="password-toggle"
                       onClick={toggleConfirmPasswordVisibility}
                       aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                      disabled={isLoading}
                     >
                       {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
                     </button>
                   </div>
                 </div>
                 
-                <button type="button" className="auth-button" onClick={handleRegister}>
-                  Sign Up
+                <button 
+                  type="button" 
+                  className="auth-button" 
+                  onClick={handleRegister}
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Signing up...' : 'Sign Up'}
                 </button>
                 
                 <div className="auth-toggle">
