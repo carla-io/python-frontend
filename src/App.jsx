@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginSignup from "./pages/LoginSignup"
 import ElectronicsInventoryDashboard from "./pages/Dashboard"
 import ProtectedRoute from './route/ProtectedRoute';
+import InventoryDashboard from "./pages/InventoryDashboard";
+import InventoryReports from "./pages/Report";
 
 function App() {
   const isAuthenticated = () => {
@@ -68,12 +70,21 @@ function App() {
           } 
         />
 
+        <Route 
+          path="/report" 
+          element={
+            <ProtectedRoute>
+              <InventoryReports />
+            </ProtectedRoute>
+          } 
+        />
+
         {/* Electronics Inventory specific routes for different user types */}
         <Route 
           path="/inventory" 
           element={
             <ProtectedRoute>
-              <ElectronicsInventoryDashboard />
+              <InventoryDashboard/>
             </ProtectedRoute>
           } 
         />

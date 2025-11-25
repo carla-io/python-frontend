@@ -13,8 +13,8 @@ const LoginSignup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loginData, setLoginData] = useState({
-    name: 'John Smith',
-    password: '••••••••••'
+    name: '',
+    password: ''
   });
   const [registerData, setRegisterData] = useState({
     name: '',

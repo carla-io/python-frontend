@@ -30,9 +30,25 @@ const Navigation = () => {
   const navigationItems = [
     { 
       name: 'Dashboard', 
-      href: userType === 'admin' ? '/admin' : userType === 'technician' ? '/technician' : '/dashboard', 
+      href: userType === 'admin' ? '/admin' : userType === 'technician' ? '/technician' : '/inventory', 
       icon: Home 
     },
+      { 
+      name: 'Electronics Inventory', 
+      href: '/dashboard', 
+      icon: Cpu 
+    },
+    { 
+      name: 'Reports', 
+      href: '/report' , 
+      icon: FileText 
+    },
+    // { 
+    //   name: 'Analytics', 
+    //   href: '/analytics', 
+    //   icon: Activity 
+    // },
+
    
   ];
 

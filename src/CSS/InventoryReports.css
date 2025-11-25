@@ -1,0 +1,417 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.dashboard-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce4ec 50%, #fecaca 100%);
+  padding: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.dashboard-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.refresh-btn {
+  background-color: #db2777;
+  color: white;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background-color: #be185d;
+}
+
+.download-btn {
+  background-color: #10b981;
+  color: white;
+}
+
+.download-btn:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Loading */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  height: 3rem;
+  width: 3rem;
+  color: #db2777;
+  animation: spin 1s linear infinite;
+}
+
+.loading-container p {
+  color: #831843;
+  font-size: 1.125rem;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Error Banner */
+.error-banner {
+  background-color: #fee2e2;
+  border: 2px solid #fecaca;
+  color: #991b1b;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.error-dismiss {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #991b1b;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Receipt Container */
+.receipt-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 2px solid #e5e7eb;
+}
+
+/* Receipt Header */
+.receipt-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.company-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: #db2777;
+}
+
+.company-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.5px;
+}
+
+.company-tagline {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.company-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Receipt Divider */
+.receipt-divider {
+  border-top: 2px dashed #d1d5db;
+  margin: 1.5rem 0;
+}
+
+/* Report Info */
+.report-info {
+  margin-bottom: 1rem;
+}
+
+.report-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+.meta-label {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.meta-value {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Receipt Section */
+.receipt-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #111827;
+  padding-bottom: 0.5rem;
+}
+
+/* Summary Grid */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.summary-value.success {
+  color: #10b981;
+}
+
+.summary-value.warning {
+  color: #ef4444;
+}
+
+/* Receipt Table */
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.receipt-table thead {
+  border-bottom: 2px solid #111827;
+}
+
+.receipt-table th {
+  padding: 0.5rem;
+  text-align: left;
+  font-weight: 700;
+  color: #111827;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.receipt-table td {
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px dotted #d1d5db;
+  color: #374151;
+}
+
+.receipt-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.category-name {
+  font-weight: 500;
+  color: #111827;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.total-row {
+  border-top: 2px solid #111827;
+  font-weight: 700;
+}
+
+.total-row td {
+  padding-top: 0.75rem;
+  border-bottom: 2px solid #111827;
+}
+
+.success {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.warning {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* Receipt Footer */
+.receipt-footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.footer-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.footer-signature {
+  margin-top: 3rem;
+}
+
+.signature-line {
+  width: 200px;
+  border-top: 2px solid #111827;
+  margin: 0 auto 0.5rem;
+}
+
+.signature-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .receipt-container {
+    padding: 1.5rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header-actions {
+    flex-direction: column;
+  }
+
+  .action-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .receipt-table {
+    font-size: 0.75rem;
+  }
+
+  .receipt-table th,
+  .receipt-table td {
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+@media print {
+  .header-actions {
+    display: none;
+  }
+
+  .error-banner {
+    display: none;
+  }
+
+  .dashboard-container {
+    background: white;
+    padding: 0;
+  }
+
+  .receipt-container {
+    box-shadow: none;
+    border: none;
+  }
+}
