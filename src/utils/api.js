@@ -1,2 +1,2 @@
-const API_BASE_URL = 'https://python-backend-8x39.onrender.com'; 
+const API_BASE_URL = 'https://python-backend-sepia-sigma.vercel.app'; 
 export default API_BASE_URL;
